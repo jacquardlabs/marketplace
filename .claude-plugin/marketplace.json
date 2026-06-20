@@ -22,18 +22,18 @@
       "homepage": "https://github.com/jacquardlabs/gg"
     },
     {
-      "name": "jaqal",
-      "description": "Jaqal — quality loom for Claude Code. Periodic health reviews, quality gates, design system extraction, and pre-deploy audits.",
+      "name": "studious",
+      "description": "Studious — a product-judgment workflow for Claude Code: quality gates, periodic health reviews, and pre-merge audits that examine each piece of work.",
       "author": {
         "name": "Jacquard Labs"
       },
       "category": "productivity",
       "source": {
         "source": "url",
-        "url": "https://github.com/jacquardlabs/jaqal.git",
+        "url": "https://github.com/jacquardlabs/studious.git",
         "sha": "e98e079cbe903362648d004a1936537885719310"
       },
-      "homepage": "https://github.com/jacquardlabs/jaqal"
+      "homepage": "https://github.com/jacquardlabs/studious"
     },
     {
       "name": "viva",
