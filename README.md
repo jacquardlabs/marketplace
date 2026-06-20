@@ -24,7 +24,7 @@ Then browse available plugins with `/plugin discover` or install directly:
 
 ### gg
 
-**Goals, guidelines, and gates** — inner-loop verification for Claude Code. Contracts at every handoff: spec → decompose → build → gates → evidence.
+Goals, guidelines, and gates: inner-loop verification for Claude Code. Contracts at every handoff: spec → decompose → build → gates → evidence.
 
 ```bash
 /plugin install gg@jacquardlabs-marketplace
@@ -36,7 +36,7 @@ Then browse available plugins with `/plugin discover` or install directly:
 
 ### jaqal
 
-**Quality loom** — periodic health reviews, quality gates, design system extraction, and pre-deploy audits.
+Quality loom: periodic health reviews, quality gates, design system extraction, and pre-deploy audits.
 
 ```bash
 /plugin install jaqal@jacquardlabs-marketplace
@@ -48,7 +48,7 @@ Then browse available plugins with `/plugin discover` or install directly:
 
 ### viva
 
-**Section-by-section markdown review** — Claude presents its work, you drill every section, Claude defends and revises until it all holds up.
+Section-by-section markdown review: Claude presents, you drill every section, Claude defends and revises until it all holds up.
 
 ```bash
 /plugin install viva@jacquardlabs-marketplace
@@ -60,7 +60,7 @@ Then browse available plugins with `/plugin discover` or install directly:
 
 ### study-skills
 
-**Study workflow** — 8 composable skills: flashcard decks, paper reader, concept checks, connection mapper, practice quizzes, and more.
+Study workflow, 8 composable skills: flashcard decks, paper reader, concept checks, connection mapper, practice quizzes, and more.
 
 ```bash
 /plugin install study-skills@jacquardlabs-marketplace
@@ -72,7 +72,7 @@ Then browse available plugins with `/plugin discover` or install directly:
 
 ### voice-suite
 
-**Voice workflows** — 7 skills that mine your writing for a voice profile, then generate docs, emails, chat messages, and rewrites in your voice.
+Voice workflows: 7 skills that mine your writing for a voice profile, then generate docs, emails, chat messages, and rewrites in your voice.
 
 ```bash
 /plugin install voice-suite@jacquardlabs-marketplace
@@ -84,7 +84,7 @@ Then browse available plugins with `/plugin discover` or install directly:
 
 ## How it works
 
-Each plugin entry is a pointer manifest referencing the canonical source repo at a pinned release SHA. A nightly GitHub Actions workflow updates the pins automatically when new releases are published.
+Each plugin points to its source repo at a pinned release SHA. A nightly GitHub Actions workflow updates pins automatically when new releases are published.
 
 To install a plugin directly from its source repo:
 
