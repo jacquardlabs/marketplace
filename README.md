@@ -12,7 +12,7 @@ Then browse available plugins with `/plugin discover` or install directly:
 
 ```bash
 /plugin install gg@jacquardlabs-marketplace
-/plugin install jaqal@jacquardlabs-marketplace
+/plugin install studious@jacquardlabs-marketplace
 /plugin install viva@jacquardlabs-marketplace
 /plugin install study-skills@jacquardlabs-marketplace
 /plugin install voice-suite@jacquardlabs-marketplace
@@ -35,15 +35,15 @@ Goals, guidelines, and gates: inner-loop verification for Claude Code. Contracts
 
 ---
 
-### jaqal
+### studious
 
-Quality loom: periodic health reviews, quality gates, design system extraction, and pre-deploy audits.
+A product-judgment workflow: quality gates, periodic health reviews, and pre-merge audits that examine each piece of work — whether to build it, whether the design serves users, and whether the result holds up.
 
 ```bash
-/plugin install jaqal@jacquardlabs-marketplace
+/plugin install studious@jacquardlabs-marketplace
 ```
 
-→ [jacquardlabs/jaqal](https://github.com/jacquardlabs/jaqal)
+→ [jacquardlabs/studious](https://github.com/jacquardlabs/studious)
 
 ---
 
