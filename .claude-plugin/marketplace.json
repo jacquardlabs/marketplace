@@ -76,6 +76,20 @@
         "sha": "24a5b569fdc7a5efdc4013daf54320b62430726b"
       },
       "homepage": "https://github.com/jacquardlabs/voice-suite"
+    },
+    {
+      "name": "dustjacket",
+      "description": "Restyle, generate, and drift-check READMEs in their repo type's house style and a chosen voice — without fabricating anything.",
+      "author": {
+        "name": "Jacquard Labs"
+      },
+      "category": "development",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/jacquardlabs/dustjacket.git",
+        "sha": "93576d1a80675707b3364d10cfc266edf24bb8ec"
+      },
+      "homepage": "https://github.com/jacquardlabs/dustjacket"
     }
   ]
 }
