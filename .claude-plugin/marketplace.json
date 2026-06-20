@@ -87,7 +87,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/jacquardlabs/dustjacket.git",
-        "sha": "5d3d671b5fa32a5fa632becffcf160a5b5b71d01"
+        "sha": "8270560a6d47eca4997280a3131bed8f870a563b"
       },
       "homepage": "https://github.com/jacquardlabs/dustjacket"
     }
