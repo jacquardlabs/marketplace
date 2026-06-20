@@ -8,20 +8,6 @@
   },
   "plugins": [
     {
-      "name": "gg",
-      "description": "Goals, guidelines, and gates — inner-loop verification for Claude Code. Contracts at every handoff: spec, decompose, build, gates, evidence.",
-      "author": {
-        "name": "Jacquard Labs"
-      },
-      "category": "development",
-      "source": {
-        "source": "url",
-        "url": "https://github.com/jacquardlabs/gg.git",
-        "sha": "f0ef833bb8d1be8e06acafe984b6efc9239641e8"
-      },
-      "homepage": "https://github.com/jacquardlabs/gg"
-    },
-    {
       "name": "studious",
       "description": "Studious — a product-judgment workflow for Claude Code: quality gates, periodic health reviews, and pre-merge audits that examine each piece of work.",
       "author": {

@@ -11,7 +11,6 @@ Skill plugins for [Claude Code](https://claude.ai/code) from [Jacquard Labs](htt
 Then browse available plugins with `/plugin discover` or install directly:
 
 ```bash
-/plugin install gg@jacquardlabs-marketplace
 /plugin install studious@jacquardlabs-marketplace
 /plugin install viva@jacquardlabs-marketplace
 /plugin install study-skills@jacquardlabs-marketplace
@@ -22,18 +21,6 @@ Then browse available plugins with `/plugin discover` or install directly:
 ---
 
 ## Plugins
-
-### gg
-
-Goals, guidelines, and gates: inner-loop verification for Claude Code. Contracts at every handoff: spec → decompose → build → gates → evidence.
-
-```bash
-/plugin install gg@jacquardlabs-marketplace
-```
-
-→ [jacquardlabs/gg](https://github.com/jacquardlabs/gg)
-
----
 
 ### studious
 
@@ -102,6 +89,6 @@ Each plugin points to its source repo at a pinned release SHA. A nightly GitHub 
 To install a plugin directly from its source repo:
 
 ```bash
-/plugin marketplace add jacquardlabs/gg
-/plugin install gg@gg
+/plugin marketplace add jacquardlabs/studious
+/plugin install studious@studious
 ```
