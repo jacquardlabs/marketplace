@@ -34,16 +34,11 @@ jobs:
               SHA="$RAW_SHA"
             fi
 
-            VERSION="${TAG#v}"
-            PLUGIN_FILE="plugins/$REPO/plugin.json"
-
-            CURRENT_SHA=$(jq -r '.source.sha // empty' "$PLUGIN_FILE")
+            CURRENT_SHA=$(jq -r --arg name "$REPO" '.plugins[] | select(.name == $name) | .source.sha // empty' .claude-plugin/marketplace.json)
             if [ "$SHA" != "$CURRENT_SHA" ]; then
-              jq --arg version "$VERSION" \
-                 --arg ref "$TAG" \
-                 --arg sha "$SHA" \
-                 '.version = $version | .source.ref = $ref | .source.sha = $sha' \
-                 "$PLUGIN_FILE" > tmp.json && mv tmp.json "$PLUGIN_FILE"
+              jq --arg name "$REPO" --arg sha "$SHA" \
+                '(.plugins[] | select(.name == $name) | .source.sha) = $sha' \
+                .claude-plugin/marketplace.json > tmp.json && mv tmp.json .claude-plugin/marketplace.json
               CHANGED=true
               echo "Updated $REPO: $TAG ($SHA)"
             else
@@ -54,7 +49,7 @@ jobs:
           if [ "$CHANGED" = "true" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add plugins/*/plugin.json
+            git add .claude-plugin/marketplace.json
             git commit -m "chore: update plugin SHA pins"
             git push
           else
