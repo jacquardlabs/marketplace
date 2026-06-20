@@ -1,0 +1,13 @@
+{
+  "name": "study-skills",
+  "description": "Study skills for Claude Code — flashcards, paper reader, concept checks, quiz generation, and more.",
+  "version": "1.0.0",
+  "author": { "name": "Jacquard Labs" },
+  "keywords": ["learning", "study", "flashcards", "comprehension", "education"],
+  "source": {
+    "source": "github",
+    "repo": "jacquardlabs/study-skills",
+    "ref": "v1.0.0",
+    "sha": "0a09f111e61a70bf3d063efbce1b48dc98c43731"
+  }
+}

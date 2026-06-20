@@ -1,0 +1,13 @@
+{
+  "name": "voice-suite",
+  "description": "Voice workflow skills for Claude Code — voice chat, email, docs, harvesting, and rewriting.",
+  "version": "1.0.0",
+  "author": { "name": "Jacquard Labs" },
+  "keywords": ["voice", "audio", "dictation", "email", "writing"],
+  "source": {
+    "source": "github",
+    "repo": "jacquardlabs/voice-suite",
+    "ref": "v1.0.0",
+    "sha": "24a5b569fdc7a5efdc4013daf54320b62430726b"
+  }
+}

@@ -1,0 +1,64 @@
+name: Update plugin SHA pins
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # nightly at 02:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update-pins:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update pins
+        run: |
+          REPOS=("gg" "jaqal" "viva" "study-skills" "voice-suite")
+          CHANGED=false
+
+          for REPO in "${REPOS[@]}"; do
+            RELEASE=$(gh api /repos/jacquardlabs/$REPO/releases/latest 2>/dev/null) || continue
+            TAG=$(echo "$RELEASE" | jq -r '.tag_name // empty')
+            [ -z "$TAG" ] && echo "No release for $REPO, skipping" && continue
+
+            REF_DATA=$(gh api /repos/jacquardlabs/$REPO/git/refs/tags/$TAG)
+            TYPE=$(echo "$REF_DATA" | jq -r '.object.type')
+            RAW_SHA=$(echo "$REF_DATA" | jq -r '.object.sha')
+
+            if [ "$TYPE" = "tag" ]; then
+              SHA=$(gh api /repos/jacquardlabs/$REPO/git/tags/$RAW_SHA | jq -r '.object.sha')
+            else
+              SHA="$RAW_SHA"
+            fi
+
+            VERSION="${TAG#v}"
+            PLUGIN_FILE="plugins/$REPO/plugin.json"
+
+            CURRENT_SHA=$(jq -r '.source.sha // empty' "$PLUGIN_FILE")
+            if [ "$SHA" != "$CURRENT_SHA" ]; then
+              jq --arg version "$VERSION" \
+                 --arg ref "$TAG" \
+                 --arg sha "$SHA" \
+                 '.version = $version | .source.ref = $ref | .source.sha = $sha' \
+                 "$PLUGIN_FILE" > tmp.json && mv tmp.json "$PLUGIN_FILE"
+              CHANGED=true
+              echo "Updated $REPO: $TAG ($SHA)"
+            else
+              echo "No change for $REPO ($TAG)"
+            fi
+          done
+
+          if [ "$CHANGED" = "true" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add plugins/*/plugin.json
+            git commit -m "chore: update plugin SHA pins"
+            git push
+          else
+            echo "All pins up to date, nothing to commit"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
