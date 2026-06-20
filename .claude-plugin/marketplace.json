@@ -31,7 +31,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/jacquardlabs/jaqal.git",
-        "sha": "a305cbe9a5ce8296dc1744842e0c3ecd686b2ed0"
+        "sha": "c1f3ba8d74e52c8f534acef24d009b6fe7e037f6"
       },
       "homepage": "https://github.com/jacquardlabs/jaqal"
     },
