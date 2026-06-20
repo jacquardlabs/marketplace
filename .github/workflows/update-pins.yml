@@ -21,7 +21,7 @@ jobs:
 
       - name: Update pins
         run: |
-          REPOS=("jaqal" "viva" "study-skills" "voice-suite" "dustjacket")
+          REPOS=("studious" "viva" "study-skills" "voice-suite" "dustjacket")
           CHANGED=false
 
           for REPO in "${REPOS[@]}"; do
