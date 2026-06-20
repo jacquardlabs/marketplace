@@ -12,7 +12,12 @@ jobs:
       contents: write
 
     steps:
+      # Check out with RELEASE_TOKEN (org-admin PAT) so the pin-bump commit can
+      # push to main past the PR-required ruleset, via the Repository Admin
+      # bypass — the same mechanism the source repos' release.yml relies on.
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.RELEASE_TOKEN }}
 
       - name: Update pins
         run: |
