@@ -1,0 +1,81 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "jacquardlabs-marketplace",
+  "description": "Jacquard Labs skill plugins for Claude Code — quality gates, reviews, study tools, voice workflows, and more.",
+  "owner": {
+    "name": "Jacquard Labs",
+    "url": "https://github.com/jacquardlabs"
+  },
+  "plugins": [
+    {
+      "name": "gg",
+      "description": "Goals, guidelines, and gates — inner-loop verification for Claude Code. Contracts at every handoff: spec, decompose, build, gates, evidence.",
+      "author": {
+        "name": "Jacquard Labs"
+      },
+      "category": "development",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/jacquardlabs/gg.git",
+        "sha": "f0ef833bb8d1be8e06acafe984b6efc9239641e8"
+      },
+      "homepage": "https://github.com/jacquardlabs/gg"
+    },
+    {
+      "name": "jaqal",
+      "description": "Jaqal — quality loom for Claude Code. Periodic health reviews, quality gates, design system extraction, and pre-deploy audits.",
+      "author": {
+        "name": "Jacquard Labs"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/jacquardlabs/jaqal.git",
+        "sha": "d196f1d43d25d9c0527bdedf9d15e5595ff09191"
+      },
+      "homepage": "https://github.com/jacquardlabs/jaqal"
+    },
+    {
+      "name": "viva",
+      "description": "Section-by-section markdown review for Claude Code. Claude presents its work, you drill every section, Claude defends and revises — the document only passes when it all holds up.",
+      "author": {
+        "name": "Jacquard Labs"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/jacquardlabs/viva.git",
+        "sha": "26616c4775ffffeba52f52bd3e24c4e92162a2f5"
+      },
+      "homepage": "https://github.com/jacquardlabs/viva"
+    },
+    {
+      "name": "study-skills",
+      "description": "Study workflow for Claude Code — 8 composable skills: flashcard decks, paper reader, concept checks, connection mapper, practice quizzes, and more.",
+      "author": {
+        "name": "Jacquard Labs"
+      },
+      "category": "learning",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/jacquardlabs/study-skills.git",
+        "sha": "0a09f111e61a70bf3d063efbce1b48dc98c43731"
+      },
+      "homepage": "https://github.com/jacquardlabs/study-skills"
+    },
+    {
+      "name": "voice-suite",
+      "description": "Voice workflows for Claude Code — 7 skills that mine your writing for a voice profile, then generate docs, emails, chat messages, and rewrites in your voice.",
+      "author": {
+        "name": "Jacquard Labs"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/jacquardlabs/voice-suite.git",
+        "sha": "24a5b569fdc7a5efdc4013daf54320b62430726b"
+      },
+      "homepage": "https://github.com/jacquardlabs/voice-suite"
+    }
+  ]
+}

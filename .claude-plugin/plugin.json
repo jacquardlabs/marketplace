@@ -1,9 +1,0 @@
-{
-  "name": "jacquardlabs-marketplace",
-  "description": "Jacquard Labs skill plugins for Claude Code — quality gates, reviews, study tools, voice workflows, and more.",
-  "author": {
-    "name": "Jacquard Labs",
-    "url": "https://github.com/jacquardlabs"
-  },
-  "homepage": "https://github.com/jacquardlabs/marketplace"
-}
