@@ -16,6 +16,7 @@ Then browse available plugins with `/plugin discover` or install directly:
 /plugin install viva@jacquardlabs-marketplace
 /plugin install study-skills@jacquardlabs-marketplace
 /plugin install voice-suite@jacquardlabs-marketplace
+/plugin install dustjacket@jacquardlabs-marketplace
 ```
 
 ---
@@ -79,6 +80,18 @@ Voice workflows: 7 skills that mine your writing for a voice profile, then gener
 ```
 
 → [jacquardlabs/voice-suite](https://github.com/jacquardlabs/voice-suite)
+
+---
+
+### dustjacket
+
+Restyle, generate, and drift-check READMEs in their repo type's house style and a chosen voice — without fabricating anything.
+
+```bash
+/plugin install dustjacket@jacquardlabs-marketplace
+```
+
+→ [jacquardlabs/dustjacket](https://github.com/jacquardlabs/dustjacket)
 
 ---
 
