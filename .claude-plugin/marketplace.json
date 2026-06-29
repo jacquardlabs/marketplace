@@ -31,7 +31,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/jacquardlabs/viva.git",
-        "sha": "e692e5609ad564cfb29520d3732ff7b65d3152ba"
+        "sha": "8ec0cc41f4c812c61d6464afe4300b471f9ce0c3"
       },
       "homepage": "https://github.com/jacquardlabs/viva"
     },
