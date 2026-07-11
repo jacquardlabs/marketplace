@@ -216,6 +216,101 @@ EOF
   git checkout main
 }
 
+# --- Stage 4: individual-repo CI PR ---
+
+notify_step_block() {
+  cat <<'EOF'
+
+  # Push-notify the marketplace to re-pin this plugin's SHA immediately.
+  # The marketplace's nightly poll remains the self-healing backstop.
+  - name: Notify marketplace to update pins
+    if: steps.version.outputs.released == 'true'
+    run: gh workflow run update-pins.yml --repo jacquardlabs/marketplace
+    env:
+      GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+EOF
+}
+
+append_notify_step() {
+  local content="$1"
+  printf '%s' "$content"
+  notify_step_block
+}
+
+ci_pr_exists() {
+  local repo="$1"
+  [ -n "$(gh pr list --repo "$ORG/$repo" --head "ci/notify-marketplace" --state all --json number --jq '.[0].number' 2>/dev/null)" ]
+}
+
+open_ci_pr() {
+  local repo="$1"
+  if ci_pr_exists "$repo"; then
+    log "CI PR for $repo already exists (open/merged/closed) — skipping"
+    return
+  fi
+
+  local branch="ci/notify-marketplace"
+  local file_path=".github/workflows/release.yml"
+  local file_data current_content file_sha new_content main_sha
+
+  if ! file_data=$(gh api "/repos/$ORG/$repo/contents/$file_path" 2>/dev/null); then
+    log "WARNING: could not fetch $file_path for $repo — skipping CI PR"
+    return
+  fi
+  if ! current_content=$(echo "$file_data" | jq -r '.content' | base64 -d 2>/dev/null); then
+    log "WARNING: could not decode $file_path content for $repo — skipping CI PR"
+    return
+  fi
+  if ! file_sha=$(echo "$file_data" | jq -r '.sha'); then
+    log "WARNING: could not read file sha for $repo — skipping CI PR"
+    return
+  fi
+  new_content=$(append_notify_step "$current_content")
+
+  if ! main_sha=$(gh api "/repos/$ORG/$repo/git/refs/heads/main" --jq '.object.sha' 2>/dev/null); then
+    log "WARNING: could not resolve main SHA for $repo — skipping CI PR"
+    return
+  fi
+
+  if [ "$DRY_RUN" = "true" ]; then
+    log "DRY RUN: would create branch $branch on $repo from $main_sha and update $file_path"
+    log "DRY RUN: would open a CI PR on $repo adding the notify step"
+    return
+  fi
+
+  if ! gh api -X POST "/repos/$ORG/$repo/git/refs" \
+      -f "ref=refs/heads/$branch" -f "sha=$main_sha" >/dev/null; then
+    log "WARNING: could not create branch $branch on $repo — skipping CI PR"
+    return
+  fi
+
+  local encoded
+  encoded=$(printf '%s' "$new_content" | base64 | tr -d '\n')
+
+  if ! gh api -X PUT "/repos/$ORG/$repo/contents/$file_path" \
+      -f "message=ci: push-notify marketplace on release" \
+      -f "content=$encoded" \
+      -f "sha=$file_sha" \
+      -f "branch=$branch" >/dev/null; then
+    log "WARNING: could not update $file_path on $repo's $branch — branch created but file update failed, PR not opened; check manually"
+    return
+  fi
+
+  if ! gh pr create --repo "$ORG/$repo" --base main --head "$branch" \
+      --title "ci: push-notify marketplace on release" \
+      --body "$(cat <<'EOF'
+Adds the marketplace push-notify step to this repo's release.yml.
+
+Before merging:
+- [ ] Confirm `RELEASE_TOKEN` secret is set on this repo
+- [ ] Confirm the `main-branch-protection` ruleset is applied to this repo
+EOF
+)"; then
+    log "WARNING: branch/file updated on $repo but PR creation failed — check manually"
+    return
+  fi
+}
+
 # --- main ---
 
 main() {
