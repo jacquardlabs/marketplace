@@ -221,19 +221,19 @@ EOF
 notify_step_block() {
   cat <<'EOF'
 
-  # Push-notify the marketplace to re-pin this plugin's SHA immediately.
-  # The marketplace's nightly poll remains the self-healing backstop.
-  - name: Notify marketplace to update pins
-    if: steps.version.outputs.released == 'true'
-    run: gh workflow run update-pins.yml --repo jacquardlabs/marketplace
-    env:
-      GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      # Push-notify the marketplace to re-pin this plugin's SHA immediately.
+      # The marketplace's nightly poll remains the self-healing backstop.
+      - name: Notify marketplace to update pins
+        if: steps.version.outputs.released == 'true'
+        run: gh workflow run update-pins.yml --repo jacquardlabs/marketplace
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 EOF
 }
 
 append_notify_step() {
   local content="$1"
-  printf '%s' "$content"
+  printf '%s\n' "$content"
   notify_step_block
 }
 
