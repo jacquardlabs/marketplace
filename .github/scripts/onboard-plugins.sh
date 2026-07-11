@@ -141,7 +141,16 @@ apply_marketplace_edits() {
   local repo="$1" sha="$2"
   local entry
   entry=$(build_plugin_entry "$repo" "$sha") || return 1
-  jq --argjson entry "$entry" '.plugins += [$entry]' "$MARKETPLACE_JSON" > tmp.json
+
+  if ! jq --argjson entry "$entry" '.plugins += [$entry]' "$MARKETPLACE_JSON" > tmp.json; then
+    rm -f tmp.json
+    return 1
+  fi
+  if [ ! -s tmp.json ]; then
+    rm -f tmp.json
+    return 1
+  fi
+
   mv tmp.json "$MARKETPLACE_JSON"
   add_repo_to_update_pins "$repo"
 }
