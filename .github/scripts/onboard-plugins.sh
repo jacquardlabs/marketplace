@@ -285,7 +285,7 @@ open_ci_pr() {
   fi
 
   local encoded
-  encoded=$(printf '%s' "$new_content" | base64 | tr -d '\n')
+  encoded=$(printf '%s\n' "$new_content" | base64 | tr -d '\n')
 
   if ! gh api -X PUT "/repos/$ORG/$repo/contents/$file_path" \
       -f "message=ci: push-notify marketplace on release" \
