@@ -102,6 +102,99 @@ resolve_latest_release_sha() {
   echo "$tag $sha"
 }
 
+# --- Stage 3: marketplace-side onboarding ---
+
+marketplace_pr_exists() {
+  local repo="$1"
+  [ -n "$(gh pr list --repo "$ORG/marketplace" --head "onboard/$repo" --state all --json number --jq '.[0].number' 2>/dev/null)" ]
+}
+
+build_plugin_entry() {
+  local repo="$1" sha="$2"
+  local plugin_json name description author repository
+
+  plugin_json=$(gh api "/repos/$ORG/$repo/contents/.claude-plugin/plugin.json" --jq '.content' 2>/dev/null | base64 -d 2>/dev/null) || return 1
+  name=$(echo "$plugin_json" | jq -r '.name') || return 1
+  description=$(echo "$plugin_json" | jq -r '.description') || return 1
+  author=$(echo "$plugin_json" | jq -c '.author') || return 1
+  repository=$(echo "$plugin_json" | jq -r '.repository') || return 1
+
+  jq -nc \
+    --arg name "$name" \
+    --arg description "$description" \
+    --argjson author "$author" \
+    --arg category "uncategorized" \
+    --arg url "https://github.com/$ORG/$repo.git" \
+    --arg sha "$sha" \
+    --arg homepage "$repository" \
+    '{name: $name, description: $description, author: $author, category: $category,
+      source: {source: "url", url: $url, sha: $sha}, homepage: $homepage}'
+}
+
+add_repo_to_update_pins() {
+  local repo="$1"
+  sed -i.bak -E "s/(REPOS=\([^)]*)\)/\1 \"${repo}\")/" "$UPDATE_PINS_YML"
+  rm -f "${UPDATE_PINS_YML}.bak"
+}
+
+apply_marketplace_edits() {
+  local repo="$1" sha="$2"
+  local entry
+  entry=$(build_plugin_entry "$repo" "$sha") || return 1
+  jq --argjson entry "$entry" '.plugins += [$entry]' "$MARKETPLACE_JSON" > tmp.json
+  mv tmp.json "$MARKETPLACE_JSON"
+  add_repo_to_update_pins "$repo"
+}
+
+open_marketplace_pr() {
+  local repo="$1"
+  if marketplace_pr_exists "$repo"; then
+    log "Marketplace PR for $repo already exists (open/merged/closed) — skipping"
+    return
+  fi
+
+  local resolved
+  resolved=$(resolve_latest_release_sha "$repo")
+  if [ -z "$resolved" ]; then
+    log "$repo has no release yet — skipping marketplace PR for now"
+    return
+  fi
+  local tag sha branch
+  tag=$(echo "$resolved" | cut -d' ' -f1)
+  sha=$(echo "$resolved" | cut -d' ' -f2)
+  branch="onboard/$repo"
+
+  git checkout main
+  git pull
+  git checkout -b "$branch"
+
+  if ! apply_marketplace_edits "$repo" "$sha"; then
+    log "WARNING: failed to build plugin entry for $repo — skipping this repo and returning to main"
+    git checkout main
+    git branch -D "$branch"
+    return
+  fi
+
+  git add "$MARKETPLACE_JSON" "$UPDATE_PINS_YML"
+  git commit -m "feat: onboard $repo into marketplace"
+
+  if [ "$DRY_RUN" = "true" ]; then
+    log "DRY RUN: would push $branch and open a PR onboarding $repo (tag $tag, sha $sha)"
+  else
+    git push -u origin "$branch"
+    gh pr create --repo "$ORG/marketplace" --base main --head "$branch" \
+      --title "feat: onboard $repo into marketplace" \
+      --body "$(cat <<EOF
+Adds \`$repo\` to the marketplace, pinned to \`$tag\` (\`$sha\`), and adds it to \`update-pins.yml\`'s REPOS array.
+
+- [ ] Confirm \`category\` is correct (written as \`"uncategorized"\` placeholder)
+EOF
+)"
+  fi
+
+  git checkout main
+}
+
 # --- main ---
 
 main() {
