@@ -59,7 +59,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/jacquardlabs/voice-suite.git",
-        "sha": "24a5b569fdc7a5efdc4013daf54320b62430726b"
+        "sha": "ca827ae81a33487dd76b10e2ad0c069efa653473"
       },
       "homepage": "https://github.com/jacquardlabs/voice-suite"
     },
