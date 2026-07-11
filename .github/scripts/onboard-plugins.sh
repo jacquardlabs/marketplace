@@ -173,13 +173,20 @@ open_marketplace_pr() {
   sha=$(echo "$resolved" | cut -d' ' -f2)
   branch="onboard/$repo"
 
-  git checkout main
+  if ! git checkout main; then
+    log "WARNING: git checkout main failed while onboarding $repo — skipping this repo for this run"
+    return
+  fi
   if ! git pull; then
     log "WARNING: git pull failed while onboarding $repo — skipping this repo for this run"
     git checkout main
     return
   fi
-  git checkout -b "$branch"
+  if ! git checkout -b "$branch"; then
+    log "WARNING: could not create branch $branch for $repo — skipping this repo for this run"
+    git checkout main
+    return
+  fi
 
   if ! apply_marketplace_edits "$repo" "$sha"; then
     log "WARNING: failed to build plugin entry for $repo — skipping this repo and returning to main"
@@ -188,8 +195,18 @@ open_marketplace_pr() {
     return
   fi
 
-  git add "$MARKETPLACE_JSON" "$UPDATE_PINS_YML"
-  git commit -m "feat: onboard $repo into marketplace"
+  if ! git add "$MARKETPLACE_JSON" "$UPDATE_PINS_YML"; then
+    log "WARNING: git add failed for $repo's onboarding changes — skipping this repo and returning to main"
+    git checkout main
+    git branch -D "$branch"
+    return
+  fi
+  if ! git commit -m "feat: onboard $repo into marketplace"; then
+    log "WARNING: git commit failed for $repo's onboarding changes — skipping this repo and returning to main"
+    git checkout main
+    git branch -D "$branch"
+    return
+  fi
 
   if [ "$DRY_RUN" = "true" ]; then
     log "DRY RUN: would push $branch and open a PR onboarding $repo (tag $tag, sha $sha)"
@@ -213,7 +230,9 @@ EOF
     fi
   fi
 
-  git checkout main
+  if ! git checkout main; then
+    log "WARNING: could not return to main after onboarding $repo — next repo's checkout may fail if this branch is still checked out"
+  fi
 }
 
 # --- Stage 4: individual-repo CI PR ---
