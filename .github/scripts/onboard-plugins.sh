@@ -27,14 +27,11 @@ discover_plugin_repos() {
     | jq -r '.[] | select(.isArchived==false and .isFork==false and .name!="marketplace") | .name' \
     | while read -r repo; do
         # Capture stderr to distinguish 404 (expected) from other errors
-        error_output=$(gh api "/repos/$ORG/$repo/contents/.claude-plugin/plugin.json" 2>&1)
-        if [ $? -eq 0 ]; then
+        local error_output
+        if error_output=$(gh api "/repos/$ORG/$repo/contents/.claude-plugin/plugin.json" 2>&1); then
           echo "$repo"
-        else
-          # Warn only if error is NOT a 404 (file genuinely absent)
-          if ! echo "$error_output" | grep -q "404"; then
-            log "Warning: failed to check $repo for plugin.json: $error_output"
-          fi
+        elif ! grep -q "404" <<<"$error_output"; then
+          log "Warning: failed to check $repo for plugin.json: $error_output"
         fi
       done
 }
