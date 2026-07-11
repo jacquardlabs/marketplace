@@ -11,11 +11,30 @@ log() { echo "[onboard-plugins] $*"; }
 # --- Stage 1: discovery ---
 
 discover_plugin_repos() {
-  gh repo list "$ORG" --limit 200 --json name,isArchived,isFork \
+  # Fetch repo list once and check for truncation
+  local repo_list
+  repo_list=$(gh repo list "$ORG" --limit 200 --json name,isArchived,isFork)
+
+  # Warn if we hit the 200-repo ceiling
+  local repo_count
+  repo_count=$(echo "$repo_list" | jq 'length')
+  if [ "$repo_count" -ge 200 ]; then
+    log "Warning: discovered repo list may be truncated (reached limit of 200 repos)"
+  fi
+
+  # Filter and check for plugin.json in each candidate repo
+  echo "$repo_list" \
     | jq -r '.[] | select(.isArchived==false and .isFork==false and .name!="marketplace") | .name' \
     | while read -r repo; do
-        if gh api "/repos/$ORG/$repo/contents/.claude-plugin/plugin.json" >/dev/null 2>&1; then
+        # Capture stderr to distinguish 404 (expected) from other errors
+        error_output=$(gh api "/repos/$ORG/$repo/contents/.claude-plugin/plugin.json" 2>&1)
+        if [ $? -eq 0 ]; then
           echo "$repo"
+        else
+          # Warn only if error is NOT a 404 (file genuinely absent)
+          if ! echo "$error_output" | grep -q "404"; then
+            log "Warning: failed to check $repo for plugin.json: $error_output"
+          fi
         fi
       done
 }
