@@ -174,7 +174,11 @@ open_marketplace_pr() {
   branch="onboard/$repo"
 
   git checkout main
-  git pull
+  if ! git pull; then
+    log "WARNING: git pull failed while onboarding $repo — skipping this repo for this run"
+    git checkout main
+    return
+  fi
   git checkout -b "$branch"
 
   if ! apply_marketplace_edits "$repo" "$sha"; then
@@ -190,15 +194,23 @@ open_marketplace_pr() {
   if [ "$DRY_RUN" = "true" ]; then
     log "DRY RUN: would push $branch and open a PR onboarding $repo (tag $tag, sha $sha)"
   else
-    git push -u origin "$branch"
-    gh pr create --repo "$ORG/marketplace" --base main --head "$branch" \
-      --title "feat: onboard $repo into marketplace" \
-      --body "$(cat <<EOF
+    if ! git push -u origin "$branch"; then
+      log "WARNING: git push failed for $repo's onboarding branch — commit exists locally but was not pushed; check manually"
+      git checkout main
+      return
+    fi
+    if ! gh pr create --repo "$ORG/marketplace" --base main --head "$branch" \
+        --title "feat: onboard $repo into marketplace" \
+        --body "$(cat <<EOF
 Adds \`$repo\` to the marketplace, pinned to \`$tag\` (\`$sha\`), and adds it to \`update-pins.yml\`'s REPOS array.
 
 - [ ] Confirm \`category\` is correct (written as \`"uncategorized"\` placeholder)
 EOF
-)"
+)"; then
+      log "WARNING: pushed $branch for $repo but PR creation failed — check manually"
+      git checkout main
+      return
+    fi
   fi
 
   git checkout main
