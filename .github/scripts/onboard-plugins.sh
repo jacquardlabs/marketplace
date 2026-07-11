@@ -197,12 +197,14 @@ open_marketplace_pr() {
 
   if ! git add "$MARKETPLACE_JSON" "$UPDATE_PINS_YML"; then
     log "WARNING: git add failed for $repo's onboarding changes — skipping this repo and returning to main"
+    git checkout -- "$MARKETPLACE_JSON" "$UPDATE_PINS_YML" 2>/dev/null
     git checkout main
     git branch -D "$branch"
     return
   fi
   if ! git commit -m "feat: onboard $repo into marketplace"; then
     log "WARNING: git commit failed for $repo's onboarding changes — skipping this repo and returning to main"
+    git reset --hard HEAD 2>/dev/null
     git checkout main
     git branch -D "$branch"
     return
