@@ -389,14 +389,14 @@ main() {
 
     case "$state" in
       missing|unrecognized)
-        open_tracking_issue "$repo"
+        open_tracking_issue "$repo" || log "WARNING: open_tracking_issue failed unexpectedly for $repo — continuing with next repo"
         ;;
       needs_notify)
-        open_ci_pr "$repo"
-        open_marketplace_pr "$repo"
+        open_ci_pr "$repo" || log "WARNING: open_ci_pr failed unexpectedly for $repo — continuing with next repo"
+        open_marketplace_pr "$repo" || log "WARNING: open_marketplace_pr failed unexpectedly for $repo — continuing with next repo"
         ;;
       compliant)
-        open_marketplace_pr "$repo"
+        open_marketplace_pr "$repo" || log "WARNING: open_marketplace_pr failed unexpectedly for $repo — continuing with next repo"
         ;;
     esac
   done <<< "$candidates"
