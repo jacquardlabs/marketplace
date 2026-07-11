@@ -311,9 +311,45 @@ EOF
   fi
 }
 
+# --- Stage 5: tracking issue ---
+
+tracking_issue_title() { echo "Needs release automation for marketplace onboarding"; }
+
+tracking_issue_exists() {
+  local repo="$1"
+  local title
+  title=$(tracking_issue_title)
+  [ -n "$(gh issue list --repo "$ORG/$repo" --search "$title in:title" --state all --json number --jq '.[0].number' 2>/dev/null)" ]
+}
+
+open_tracking_issue() {
+  local repo="$1"
+  if tracking_issue_exists "$repo"; then
+    log "Tracking issue for $repo already exists — skipping"
+    return
+  fi
+
+  local title body
+  title=$(tracking_issue_title)
+  body="This repo has a .claude-plugin/plugin.json but no release.yml matching the org's semantic-release template, so it can't be auto-onboarded into the marketplace. See jacquardlabs/marketplace's onboard-plugins.yml for what's expected, or reach out to have this scaffolded manually."
+
+  if [ "$DRY_RUN" = "true" ]; then
+    log "DRY RUN: would open tracking issue on $repo: $title"
+    return
+  fi
+
+  if ! gh issue create --repo "$ORG/$repo" --title "$title" --body "$body"; then
+    log "WARNING: could not create tracking issue on $repo — check manually"
+    return
+  fi
+}
+
 # --- main ---
 
 main() {
+  git config user.name "github-actions[bot]"
+  git config user.email "github-actions[bot]@users.noreply.github.com"
+
   log "Discovering plugin repos in $ORG..."
   local candidates
   candidates=$(discover_plugin_repos | filter_unlisted)
@@ -323,7 +359,26 @@ main() {
     return
   fi
 
-  echo "$candidates"
+  local repo state
+  while read -r repo; do
+    [ -z "$repo" ] && continue
+    log "Processing $repo..."
+    state=$(classify_release_yml "$repo")
+    log "$repo release.yml state: $state"
+
+    case "$state" in
+      missing|unrecognized)
+        open_tracking_issue "$repo"
+        ;;
+      needs_notify)
+        open_ci_pr "$repo"
+        open_marketplace_pr "$repo"
+        ;;
+      compliant)
+        open_marketplace_pr "$repo"
+        ;;
+    esac
+  done <<< "$candidates"
 }
 
 if [[ "${BASH_SOURCE[0]:-}" == "${0}" ]]; then
