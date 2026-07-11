@@ -85,16 +85,17 @@ classify_release_yml() {
 resolve_latest_release_sha() {
   local repo="$1"
   local release tag ref_data type raw_sha sha
+
   release=$(gh api "/repos/$ORG/$repo/releases/latest" 2>/dev/null) || return 0
-  tag=$(echo "$release" | jq -r '.tag_name // empty')
+  tag=$(echo "$release" | jq -r '.tag_name // empty') || return 0
   [ -z "$tag" ] && return 0
 
-  ref_data=$(gh api "/repos/$ORG/$repo/git/refs/tags/$tag")
-  type=$(echo "$ref_data" | jq -r '.object.type')
-  raw_sha=$(echo "$ref_data" | jq -r '.object.sha')
+  ref_data=$(gh api "/repos/$ORG/$repo/git/refs/tags/$tag" 2>/dev/null) || return 0
+  type=$(echo "$ref_data" | jq -r '.object.type') || return 0
+  raw_sha=$(echo "$ref_data" | jq -r '.object.sha') || return 0
 
   if [ "$type" = "tag" ]; then
-    sha=$(gh api "/repos/$ORG/$repo/git/tags/$raw_sha" | jq -r '.object.sha')
+    sha=$(gh api "/repos/$ORG/$repo/git/tags/$raw_sha" 2>/dev/null | jq -r '.object.sha') || return 0
   else
     sha="$raw_sha"
   fi
