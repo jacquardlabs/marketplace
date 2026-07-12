@@ -76,6 +76,20 @@
         "sha": "8270560a6d47eca4997280a3131bed8f870a563b"
       },
       "homepage": "https://github.com/jacquardlabs/dustjacket"
+    },
+    {
+      "name": "jig",
+      "description": "jig — the build-execution plugin for Claude Code. Turns an approved design into a verified implementation through /design, /plan, /build, and /finish, with a coach for stuck loops. Fresh executor per task, script-verified, standalone-capable alongside studious.",
+      "author": {
+        "name": "Jacquard Labs"
+      },
+      "category": "development",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/jacquardlabs/jig.git",
+        "sha": "6ca118de448e2c7c3073809efa51f8b81e362636"
+      },
+      "homepage": "https://github.com/jacquardlabs/jig"
     }
   ]
 }
