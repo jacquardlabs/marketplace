@@ -135,6 +135,10 @@ add_repo_to_update_pins() {
   local repo="$1"
   sed -i.bak -E "s/(REPOS=\([^)]*)\)/\1 \"${repo}\")/" "$UPDATE_PINS_YML"
   rm -f "${UPDATE_PINS_YML}.bak"
+  if ! grep -q "\"$repo\"" "$UPDATE_PINS_YML"; then
+    log "WARNING: $repo was not found in $UPDATE_PINS_YML after the sed edit — REPOS array may not match the expected single-line format"
+    return 1
+  fi
 }
 
 apply_marketplace_edits() {
@@ -173,6 +177,11 @@ open_marketplace_pr() {
   sha=$(echo "$resolved" | cut -d' ' -f2)
   branch="onboard/$repo"
 
+  if [ "$DRY_RUN" = "true" ]; then
+    log "DRY RUN: would create branch $branch, edit marketplace.json and update-pins.yml, commit, push, and open a PR onboarding $repo (tag $tag, sha $sha)"
+    return
+  fi
+
   if ! git checkout main; then
     log "WARNING: git checkout main failed while onboarding $repo — skipping this repo for this run"
     return
@@ -210,26 +219,22 @@ open_marketplace_pr() {
     return
   fi
 
-  if [ "$DRY_RUN" = "true" ]; then
-    log "DRY RUN: would push $branch and open a PR onboarding $repo (tag $tag, sha $sha)"
-  else
-    if ! git push -u origin "$branch"; then
-      log "WARNING: git push failed for $repo's onboarding branch — commit exists locally but was not pushed; check manually"
-      git checkout main
-      return
-    fi
-    if ! gh pr create --repo "$ORG/marketplace" --base main --head "$branch" \
-        --title "feat: onboard $repo into marketplace" \
-        --body "$(cat <<EOF
+  if ! git push -u origin "$branch"; then
+    log "WARNING: git push failed for $repo's onboarding branch — commit exists locally but was not pushed; check manually"
+    git checkout main
+    return
+  fi
+  if ! gh pr create --repo "$ORG/marketplace" --base main --head "$branch" \
+      --title "feat: onboard $repo into marketplace" \
+      --body "$(cat <<EOF
 Adds \`$repo\` to the marketplace, pinned to \`$tag\` (\`$sha\`), and adds it to \`update-pins.yml\`'s REPOS array.
 
 - [ ] Confirm \`category\` is correct (written as \`"uncategorized"\` placeholder)
 EOF
 )"; then
-      log "WARNING: pushed $branch for $repo but PR creation failed — check manually"
-      git checkout main
-      return
-    fi
+    log "WARNING: pushed $branch for $repo but PR creation failed — check manually"
+    git checkout main
+    return
   fi
 
   if ! git checkout main; then
