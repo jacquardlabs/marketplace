@@ -87,7 +87,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/jacquardlabs/jig.git",
-        "sha": "31543d93e0c1175e716e91c979f3c43127edcb32"
+        "sha": "88cbd57fe595542e2976ee677a3a8511fd186346"
       },
       "homepage": "https://github.com/jacquardlabs/jig"
     }
