@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "jacquardlabs-marketplace",
-  "description": "Jacquard Labs skill plugins for Claude Code — quality gates, reviews, study tools, voice workflows, and more.",
+  "description": "Jacquard Labs skill plugins for Claude Code — a delivery discipline, markdown review, and voice workflows.",
   "owner": {
     "name": "Jacquard Labs",
     "url": "https://github.com/jacquardlabs"
@@ -36,20 +36,6 @@
       "homepage": "https://github.com/jacquardlabs/viva"
     },
     {
-      "name": "study-skills",
-      "description": "Study workflow for Claude Code — 8 composable skills: flashcard decks, paper reader, concept checks, connection mapper, practice quizzes, and more.",
-      "author": {
-        "name": "Jacquard Labs"
-      },
-      "category": "learning",
-      "source": {
-        "source": "url",
-        "url": "https://github.com/jacquardlabs/study-skills.git",
-        "sha": "0a09f111e61a70bf3d063efbce1b48dc98c43731"
-      },
-      "homepage": "https://github.com/jacquardlabs/study-skills"
-    },
-    {
       "name": "voice-suite",
       "description": "Voice workflows for Claude Code — 7 skills that mine your writing for a voice profile, then generate docs, emails, chat messages, and rewrites in your voice.",
       "author": {
@@ -62,20 +48,6 @@
         "sha": "ca827ae81a33487dd76b10e2ad0c069efa653473"
       },
       "homepage": "https://github.com/jacquardlabs/voice-suite"
-    },
-    {
-      "name": "dustjacket",
-      "description": "Restyle, generate, and drift-check READMEs in their repo type's house style and a chosen voice — without fabricating anything.",
-      "author": {
-        "name": "Jacquard Labs"
-      },
-      "category": "development",
-      "source": {
-        "source": "url",
-        "url": "https://github.com/jacquardlabs/dustjacket.git",
-        "sha": "8270560a6d47eca4997280a3131bed8f870a563b"
-      },
-      "homepage": "https://github.com/jacquardlabs/dustjacket"
     }
   ]
 }
