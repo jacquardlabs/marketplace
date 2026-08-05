@@ -48,6 +48,20 @@
         "sha": "ca827ae81a33487dd76b10e2ad0c069efa653473"
       },
       "homepage": "https://github.com/jacquardlabs/voice-suite"
+    },
+    {
+      "name": "gauntlet",
+      "description": "Independent judges for pre-delivery artifacts. Run a changeset or PR through the gauntlet: each lane grades it against a standard it owns and returns findings with anchors and grounds — never a verdict, never a fix.",
+      "author": {
+        "name": "Jacquard Labs"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/jacquardlabs/gauntlet.git",
+        "sha": "ecbf18ae1219e3d18a43a2ddb9a6a1993147e3a2"
+      },
+      "homepage": "https://github.com/jacquardlabs/gauntlet"
     }
   ]
 }
