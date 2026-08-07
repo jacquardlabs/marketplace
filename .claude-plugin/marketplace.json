@@ -59,7 +59,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/jacquardlabs/gauntlet.git",
-        "sha": "70e46feb1a0e72883a4559d67f3a4ec1acfcb1eb"
+        "sha": "d248fa29bd7e552784e1ff935cc54db8a0425d81"
       },
       "homepage": "https://github.com/jacquardlabs/gauntlet"
     }
