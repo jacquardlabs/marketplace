@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "jacquardlabs-marketplace",
-  "description": "Jacquard Labs skill plugins for Claude Code — a delivery discipline, markdown review, and voice workflows.",
+  "description": "Jacquard Labs skill plugins for Claude Code — a delivery discipline, independent judges, aggressive simplification, markdown review, and voice workflows.",
   "owner": {
     "name": "Jacquard Labs",
     "url": "https://github.com/jacquardlabs"
@@ -62,6 +62,20 @@
         "sha": "d7a79d2a2fdb830d0aad9c1f95bb9b0f95da9539"
       },
       "homepage": "https://github.com/jacquardlabs/gauntlet"
+    },
+    {
+      "name": "exorcist",
+      "description": "Aggressive simplification for LLM-generated code. A standing ward imported via CLAUDE.md, a changeset pass that traces every hunk to the stated intent and reverts what does not belong, and a read-only codebase séance that hunts pattern contention, dead code, duplicated helpers, and wrapper strata with static-analysis receipts into a register you approve before anything is applied. Scored in concepts removed, never lines.",
+      "author": {
+        "name": "Jacquard Labs"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/jacquardlabs/exorcist.git",
+        "sha": "97fc5aef49b30c91795479f864f1caf9da87b23f"
+      },
+      "homepage": "https://github.com/jacquardlabs/exorcist"
     }
   ]
 }
