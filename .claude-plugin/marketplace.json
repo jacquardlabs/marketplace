@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "jacquardlabs-marketplace",
-  "description": "Jacquard Labs skill plugins for Claude Code \u2014 a delivery discipline, independent judges, aggressive simplification, markdown review, and voice workflows.",
+  "description": "Jacquard Labs skill plugins for Claude Code — a delivery discipline, independent judges, aggressive simplification, markdown review, and voice workflows.",
   "owner": {
     "name": "Jacquard Labs",
     "url": "https://github.com/jacquardlabs"
@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "studious",
-      "description": "Studious \u2014 a product-judgment workflow for Claude Code: quality gates, periodic health reviews, and pre-merge audits that examine each piece of work.",
+      "description": "Studious — a product-judgment workflow for Claude Code: quality gates, periodic health reviews, and pre-merge audits that examine each piece of work.",
       "author": {
         "name": "Jacquard Labs"
       },
@@ -23,7 +23,7 @@
     },
     {
       "name": "viva",
-      "description": "Section-by-section markdown review for Claude Code. Claude presents its work, you drill every section, Claude defends and revises \u2014 the document only passes when it all holds up.",
+      "description": "Section-by-section markdown review for Claude Code. Claude presents its work, you drill every section, Claude defends and revises — the document only passes when it all holds up.",
       "author": {
         "name": "Jacquard Labs"
       },
@@ -37,7 +37,7 @@
     },
     {
       "name": "voice-suite",
-      "description": "Voice workflows for Claude Code \u2014 7 skills that mine your writing for a voice profile, then generate docs, emails, chat messages, and rewrites in your voice.",
+      "description": "Voice workflows for Claude Code — 7 skills that mine your writing for a voice profile, then generate docs, emails, chat messages, and rewrites in your voice.",
       "author": {
         "name": "Jacquard Labs"
       },
@@ -51,7 +51,7 @@
     },
     {
       "name": "gauntlet",
-      "description": "Independent judges for pre-delivery artifacts. Run a changeset or PR through the gauntlet: each lane grades it against a standard it owns and returns findings with anchors and grounds \u2014 never a verdict, never a fix.",
+      "description": "Independent judges for pre-delivery artifacts. Run a changeset or PR through the gauntlet: each lane grades it against a standard it owns and returns findings with anchors and grounds — never a verdict, never a fix.",
       "author": {
         "name": "Jacquard Labs"
       },
@@ -65,7 +65,7 @@
     },
     {
       "name": "exorcist",
-      "description": "Aggressive simplification for LLM-generated code. A standing ward imported via CLAUDE.md, a changeset pass that traces every hunk to the stated intent and reverts what does not belong, and a read-only codebase s\u00e9ance that hunts pattern contention, dead code, duplicated helpers, and wrapper strata with static-analysis receipts into a register you approve before anything is applied. Scored in concepts removed, never lines.",
+      "description": "Aggressive simplification for LLM-generated code. A standing ward imported via CLAUDE.md, a changeset pass that traces every hunk to the stated intent and reverts what does not belong, and a read-only codebase séance that hunts pattern contention, dead code, duplicated helpers, and wrapper strata with static-analysis receipts into a register you approve before anything is applied. Scored in concepts removed, never lines.",
       "author": {
         "name": "Jacquard Labs"
       },
