@@ -73,7 +73,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/jacquardlabs/exorcist.git",
-        "sha": "c21f499ddf73ea6772c37e8fde7e7a6f23ebdfb5"
+        "sha": "883f13830fbebd59c4c0632b945103ac866f1ea6"
       },
       "homepage": "https://github.com/jacquardlabs/exorcist"
     }
