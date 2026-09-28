@@ -1,26 +1,12 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "jacquardlabs-marketplace",
-  "description": "Jacquard Labs skill plugins for Claude Code — a delivery discipline, independent judges, aggressive simplification, markdown review, and voice workflows.",
+  "description": "Jacquard Labs skill plugins for Claude Code — independent judges, aggressive simplification, markdown review, and voice workflows.",
   "owner": {
     "name": "Jacquard Labs",
     "url": "https://github.com/jacquardlabs"
   },
   "plugins": [
-    {
-      "name": "studious",
-      "description": "Studious — a product-judgment workflow for Claude Code: quality gates, periodic health reviews, and pre-merge audits that examine each piece of work.",
-      "author": {
-        "name": "Jacquard Labs"
-      },
-      "category": "productivity",
-      "source": {
-        "source": "url",
-        "url": "https://github.com/jacquardlabs/studious.git",
-        "sha": "983548387a9c7b7a554b3a522e0ba711baead42f"
-      },
-      "homepage": "https://github.com/jacquardlabs/studious"
-    },
     {
       "name": "viva",
       "description": "Section-by-section markdown review for Claude Code. Claude presents its work, you drill every section, Claude defends and revises — the document only passes when it all holds up.",
