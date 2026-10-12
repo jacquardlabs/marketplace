@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "jacquardlabs-marketplace",
-  "description": "Jacquard Labs skill plugins for Claude Code — independent judges, aggressive simplification, markdown review, and voice workflows.",
+  "description": "Jacquard Labs skill plugins for Claude Code — independent judges, aggressive simplification, markdown review, voice workflows, and research skills.",
   "owner": {
     "name": "Jacquard Labs",
     "url": "https://github.com/jacquardlabs"
@@ -62,6 +62,20 @@
         "sha": "d8e3b0def52ae8c956b3c3218f6f80bfa4cca709"
       },
       "homepage": "https://github.com/jacquardlabs/exorcist"
+    },
+    {
+      "name": "study-skills",
+      "description": "Research skills for Claude Code — 5 composable skills: topic maps, paper reading and critique, literature synthesis, and understanding checks.",
+      "author": {
+        "name": "Jacquard Labs"
+      },
+      "category": "learning",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/jacquardlabs/study-skills.git",
+        "sha": "a576399e21e64651a4e7b0bffa5998d26f10301b"
+      },
+      "homepage": "https://github.com/jacquardlabs/study-skills"
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Jacquard Labs Marketplace
 
-Jacquard Labs skill plugins for [Claude Code](https://claude.ai/code): a delivery discipline, independent judges, aggressive simplification, markdown review, and voice workflows.
+Jacquard Labs skill plugins for [Claude Code](https://claude.ai/code): a delivery discipline, independent judges, aggressive simplification, markdown review, voice workflows, and research skills.
 
 [![Update plugin SHA pins](https://github.com/jacquardlabs/marketplace/actions/workflows/update-pins.yml/badge.svg)](https://github.com/jacquardlabs/marketplace/actions/workflows/update-pins.yml)
 
@@ -20,6 +20,7 @@ Then browse available plugins with `/plugin discover`, or install one directly w
 | [exorcist](https://github.com/jacquardlabs/exorcist) | Aggressive simplification for LLM-generated code: a standing ward imported via CLAUDE.md, `/exorcist:exorcise` to audit a changeset against its stated intent and revert what does not belong, and `/exorcist:seance` to survey a whole repository — pattern contention, dead code, duplicated helpers, wrapper strata — into a register you approve before anything is applied. Scored in concepts removed, never lines. | `/plugin install exorcist@jacquardlabs-marketplace` |
 | [viva](https://github.com/jacquardlabs/viva) | Section-by-section markdown review: Claude presents, you drill every section, Claude defends and revises until it all holds up. | `/plugin install viva@jacquardlabs-marketplace` |
 | [voice-suite](https://github.com/jacquardlabs/voice-suite) | Voice workflows: 7 skills that mine your writing for a voice profile, then generate docs, emails, chat messages, and rewrites in your voice. | `/plugin install voice-suite@jacquardlabs-marketplace` |
+| [study-skills](https://github.com/jacquardlabs/study-skills) | Research skills, 5 composable skills: map an unfamiliar topic, read and critique papers, synthesize a body of work, and check what you understood. | `/plugin install study-skills@jacquardlabs-marketplace` |
 
 Each plugin points to its source repo at a pinned release SHA. Install through this marketplace — the source repos hold plugins, not catalogs, so `/plugin marketplace add jacquardlabs/<repo>` has nothing to read and fails with "Marketplace file not found."
 
